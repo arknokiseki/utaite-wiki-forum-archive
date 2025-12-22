@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Utaite Wiki Discussions',
-  description: 'Browse and explore Utaite Wiki community discussions',
+  description: 'Browse and explore the Old Utaite Wiki community discussions archive',
 };
 
 export default function RootLayout({
