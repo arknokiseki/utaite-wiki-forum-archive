@@ -5,13 +5,15 @@ import { UserAvatar } from '@/components/users/user-avatar';
 import { UserBadge } from '@/components/users/user-badge';
 import { formatDateTime } from '@/lib/utils';
 import type { PostWithAuthor } from '@/types';
+import { RichTextRenderer } from '@/components/shared/rich-text-renderer';
 
 export function PostCard({ post }: { post: PostWithAuthor }) {
+  // console.log('post card info (json_model - raw_content - rendered_content):', post.json_model, post.raw_content, post.rendered_content);
   return (
-    <Card id={post.id}>
+    <Card id={post.id} className="scroll-mt-20">
       <CardContent className="p-4 sm:p-6">
         <div className="flex gap-4">
-          <div className="flex-shrink-0 hidden sm:block">
+          <div className="shrink-0 hidden sm:block">
             <UserAvatar 
               name={post.author_name} 
               avatarUrl={post.author_avatar}
@@ -33,11 +35,11 @@ export function PostCard({ post }: { post: PostWithAuthor }) {
                 #{post.position}
               </span>
             </div>
-            
-            <div className="prose dark:prose-invert max-w-none text-sm sm:text-base">
-              <div className="whitespace-pre-wrap">
-                {post.raw_content}
-              </div>
+            <div className="prose dark:prose-invert max-w-none">
+              <RichTextRenderer 
+                jsonModel={post.json_model} 
+                fallbackContent={post.raw_content} 
+              />
             </div>
           </div>
         </div>

@@ -3,11 +3,10 @@
 import { use, useState } from 'react';
 import { useForum } from '@/hooks/use-forums';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, MessageSquare, ThumbsUp, Clock } from 'lucide-react';
+import { ArrowLeft, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
-import { formatRelativeTime, truncateText } from '@/lib/utils';
+import { truncateText } from '@/lib/utils';
 import { UserAvatar } from '@/components/users/user-avatar';
 import { Pagination } from '@/components/shared/pagination';
 import { ThreadListSkeleton } from '@/components/shared/loading-skeleton';
@@ -60,7 +59,7 @@ export default function ForumPage({ params }: { params: Promise<{ id: string }> 
         <div className="space-y-3">
           {data?.threads.data.map((thread) => (
             <Link key={thread.id} href={`/threads/${thread.id}`}>
-              <Card className="transition-all hover:shadow-md hover:border-primary/50 cursor-pointer">
+              <Card className="transition-all hover:shadow-md hover:border-primary/50 cursor-pointer mb-4">
                 <CardContent className="p-4">
                   <div className="flex items-start gap-4">
                     <UserAvatar
