@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'vignette.wikia.nocookie.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'static.wikitide.net',
+      },
     ],
   },
   serverExternalPackages: ['better-sqlite3'],

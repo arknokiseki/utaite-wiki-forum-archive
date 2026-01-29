@@ -37,7 +37,7 @@ export async function getDashboardStats(): Promise<StatsResponse> {
   const [artists, users, recentThreads] = await Promise.all([
     getTopArtists(10),
     getTopUsers(10),
-    getRecentThreads(5),
+    getRecentThreads(7),
   ]);
 
   return {

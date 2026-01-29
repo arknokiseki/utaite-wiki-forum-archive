@@ -6,6 +6,7 @@ import { useUser } from '@/hooks/use-users';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { UserAvatar } from '@/components/users/user-avatar';
 import { UserBadge } from '@/components/users/user-badge';
+import { MessageWall } from '@/components/users/message-wall';
 import { Skeleton } from '@/components/ui/skeleton';
 import { MessageSquare, ThumbsUp, MessagesSquare } from 'lucide-react';
 
@@ -90,6 +91,9 @@ export default function UserProfilePage({ params }: { params: Promise<{ id: stri
           </CardContent>
         </Card>
       </div>
+
+      {/* Message Wall */}
+      <MessageWall userId={user.id} />
     </div>
   );
 }

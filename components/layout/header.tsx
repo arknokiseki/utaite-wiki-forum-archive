@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Music, Search, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -38,8 +39,13 @@ export function Header() {
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-            <Music className="h-5 w-5 text-primary-foreground" />
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg">
+            <Image
+              src="https://static.wikitide.net/utaitewiki/e/e6/Site-logo.png"
+              alt="Utaite Wiki's Logo"
+              width={48}
+              height={48}
+            />
           </div>
           <span className="hidden font-bold text-xl md:inline-block">
             Utaite Wiki Forum Archive
