@@ -14,6 +14,7 @@ export interface MessageWallThread {
   post_count: number;
   // First post content
   raw_content: string | null;
+  rendered_content: string | null;  // HTML content for old/migrated posts
   json_model: string | null;
 }
 
@@ -27,6 +28,7 @@ export interface MessageWallPost {
   creator_avatar: string | null;
   creator_badge: string | null;
   raw_content: string | null;
+  rendered_content: string | null;  // HTML content for old/migrated posts
   json_model: string | null;
 }
 
@@ -48,6 +50,7 @@ export async function getMessageWallThreads(
 
   // Data query - get threads with first post content from MessageWallThreadDetails
   // MessageWallThreadDetails contains scraped data from Fandom API
+  // Note: Old/migrated posts may have empty rawContent with content in renderedContent (HTML)
   const query = `
     SELECT 
       mwt.id,
@@ -61,6 +64,7 @@ export async function getMessageWallThreads(
       u.avatar_url as creator_avatar,
       u.badge_permission as creator_badge,
       COALESCE(mwtd.first_post_raw_content, mwp.raw_content) as raw_content,
+      mwtd.first_post_rendered_content as rendered_content,
       COALESCE(mwtd.first_post_json_model, mwp.json_model) as json_model
     FROM MessageWallThreads mwt
     LEFT JOIN Users u ON mwt.creator_id = u.id
@@ -89,6 +93,7 @@ export async function getMessageWallThreads(
 export async function getMessageWallReplies(threadId: string): Promise<MessageWallPost[]> {
   // Get all replies for this thread from MessageWallPostDetails (scraped data)
   // This only returns data if the scraper has populated the table
+  // Note: Old/migrated posts may have empty rawContent with content in renderedContent (HTML)
   const query = `
     SELECT 
       mwpd.post_id as id,
@@ -97,6 +102,7 @@ export async function getMessageWallReplies(threadId: string): Promise<MessageWa
       mwpd.created_epoch_seconds,
       mwpd.creator_id,
       mwpd.raw_content,
+      mwpd.rendered_content,
       mwpd.json_model,
       COALESCE(mwpd.creator_name, u.name) as creator_name,
       COALESCE(mwpd.creator_avatar, u.avatar_url) as creator_avatar,

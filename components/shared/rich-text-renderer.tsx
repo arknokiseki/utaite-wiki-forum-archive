@@ -9,9 +9,10 @@ import { ImageOff } from 'lucide-react';
 interface RichTextRendererProps {
   jsonModel: string | null;
   fallbackContent: string | null;
+  renderedContent?: string | null;  // HTML content for old/migrated posts
 }
 
-export function RichTextRenderer({ jsonModel, fallbackContent }: RichTextRendererProps) {
+export function RichTextRenderer({ jsonModel, fallbackContent, renderedContent }: RichTextRendererProps) {
   const content = useMemo(() => {
     if (!jsonModel) return null;
     try {
@@ -24,8 +25,10 @@ export function RichTextRenderer({ jsonModel, fallbackContent }: RichTextRendere
   }, [jsonModel]);
 
   if (!content) {
-    if (fallbackContent && fallbackContent.includes('<')) {
-       return <div className="prose dark:prose-invert" dangerouslySetInnerHTML={{ __html: fallbackContent }} />;
+    // For old/migrated posts, prefer renderedContent (HTML) over rawContent
+    const htmlContent = renderedContent || (fallbackContent && fallbackContent.includes('<') ? fallbackContent : null);
+    if (htmlContent) {
+      return <div className="prose dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: htmlContent }} />;
     }
     return <div className="whitespace-pre-wrap">{fallbackContent || ''}</div>;
   }

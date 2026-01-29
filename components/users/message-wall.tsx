@@ -149,11 +149,12 @@ function MessageThreadCard({ thread, userId }: MessageThreadCardProps) {
               <h3 className="font-semibold text-base mb-2">{thread.title}</h3>
             )}
             {/* Display message content if available */}
-            {(thread.json_model || thread.raw_content) && (
+            {(thread.json_model || thread.raw_content || thread.rendered_content) && (
               <div className="prose dark:prose-invert max-w-none text-sm">
                 <RichTextRenderer
                   jsonModel={thread.json_model}
                   fallbackContent={thread.raw_content}
+                  renderedContent={thread.rendered_content}
                 />
               </div>
             )}
@@ -223,6 +224,7 @@ function MessageThreadCard({ thread, userId }: MessageThreadCardProps) {
                             <RichTextRenderer
                               jsonModel={reply.json_model}
                               fallbackContent={reply.raw_content}
+                              renderedContent={reply.rendered_content}
                             />
                           </div>
                         </div>
